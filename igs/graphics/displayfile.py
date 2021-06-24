@@ -64,8 +64,14 @@ class DisplayFile(QtCore.QAbstractListModel):
 
     def setData(self, index, value, role=Qt.EditRole):
         if index.isValid() and role == Qt.EditRole:
-            self._shapes[index.row()] = value
-            self.dataChanged.emit(index, index, [role])
+            shape = self._shapes[index.row()]
+
+            if isinstance(value, str):
+                shape.set_name(value)
+            else:
+                self._shapes[index.row()] = value
+                self.dataChanged.emit(index, index, [role])
+
             return True
 
         return False

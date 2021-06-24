@@ -18,12 +18,11 @@ class Point(Clonable):
 class Shape(ABC, Clonable, Drawable):
     def __init__(self):
         self._points = []
+        self._name = self.__class__.__name__
 
     def __str__(self):
-        name = self.__class__.__name__
         hash_value = str(hex(hash(self)))
-
-        return f"{name} ({hash_value[-6:]})"
+        return f"{self._name} ({hash_value[-6:]})"
 
     def apply(self, transform):
         self._points = [transform(p) for p in self._points]
@@ -31,6 +30,9 @@ class Shape(ABC, Clonable, Drawable):
 
     def add(self, point):
         self._points.append(point)
+
+    def set_name(self, name):
+        self._name = name
 
     def point_at(self, index):
         return self._points[index]
