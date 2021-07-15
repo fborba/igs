@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets
 
-from igs.graphics.shape import Line, Point, Rectangle, Square
+from igs.graphics.shape import Line, Point, Position, Rectangle, Square
 
 from igs.ui import util
 
@@ -67,7 +67,24 @@ class LineDialog(ShapeDialog):
         x1 = int(self._x1.text())
         y1 = int(self._y1.text())
 
-        return Line(Point(x0, y0), Point(x1, y1))
+        return Line(Position(x0, y0), Position(x1, y1))
+
+
+class PointDialog(ShapeDialog):
+    def __init__(self, shape):
+        super().__init__(shape)
+
+        self._x = util.IntLineEdit()
+        self._y = util.IntLineEdit()
+
+        self.add_input("x-coordinate", self._x)
+        self.add_input("y-coordinate", self._y)
+
+    def shape(self):
+        x = int(self._x.text())
+        y = int(self._y.text())
+
+        return Point(Position(x, y))
 
 
 class RectangleDialog(ShapeDialog):
@@ -90,7 +107,7 @@ class RectangleDialog(ShapeDialog):
         width = int(self._width.text())
         height = int(self._height.text())
 
-        return Rectangle(Point(x, y), width, height)
+        return Rectangle(Position(x, y), width, height)
 
 
 class SquareDialog(ShapeDialog):
@@ -110,7 +127,7 @@ class SquareDialog(ShapeDialog):
         y = int(self._y.text())
         size = int(self._size.text())
 
-        return Square(Point(x, y), size)
+        return Square(Position(x, y), size)
 
 
 class DialogFactory:
@@ -132,5 +149,6 @@ class DialogFactory:
 dialog_factory = DialogFactory()
 
 dialog_factory.register("Line", LineDialog)
+dialog_factory.register("Point", PointDialog)
 dialog_factory.register("Rectangle", RectangleDialog)
 dialog_factory.register("Square", SquareDialog)

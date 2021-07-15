@@ -1,6 +1,6 @@
 from enum import Enum, auto
 
-from igs.graphics.shape import Point, Rectangle
+from igs.graphics.shape import Position, Rectangle
 from igs.graphics.transform import Scaling, Translation
 
 
@@ -85,13 +85,13 @@ class Window(Rectangle):
         x = (point.x() - self.xmin()) / self.width()
         y = 1 - (point.y() - self.ymin()) / self.height()
 
-        return Point(x, y)
+        return Position(x, y)
 
     def center(self):
         x = self.xmin() + self.width() / 2
         y = self.ymin() + self.height() / 2
 
-        return Point(x, y)
+        return Position(x, y)
 
     def width(self):
         return self.xmax() - self.xmin()

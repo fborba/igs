@@ -2,7 +2,7 @@ from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtCore import Qt
 
 from igs.graphics.window import Window
-from igs.graphics.shape import Mark, Point
+from igs.graphics.shape import Mark, Position
 
 
 class ListView(QtWidgets.QListView):
@@ -55,7 +55,7 @@ class Viewport(QtWidgets.QFrame):
         self.setFixedSize(size, size)
 
         self._window = Window(
-            Point(-window_size / 2, -window_size / 2),
+            Position(-window_size / 2, -window_size / 2),
             window_size,
             window_size,
         )
@@ -75,7 +75,7 @@ class Viewport(QtWidgets.QFrame):
         self._display_file = display_file
 
         if center_marker:
-            self._display_file.add(Mark(Point(0, 0)))
+            self._display_file.add(Mark(Position(0, 0)))
 
     def width(self):
         """
@@ -134,7 +134,7 @@ class Viewport(QtWidgets.QFrame):
         x = round(point.x() * self.width())
         y = round(point.y() * self.height())
 
-        return Point(x, y)
+        return Position(x, y)
 
     def keyPressEvent(self, event):
         super().keyPressEvent(event)

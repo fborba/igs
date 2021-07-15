@@ -2,7 +2,7 @@ import math
 
 import numpy
 
-from igs.graphics.shape import Point
+from igs.graphics.shape import Position
 
 
 class Transform:
@@ -19,7 +19,7 @@ class Transform:
         vector = numpy.array([[point.x(), point.y(), 1]])
         result = numpy.matmul(vector, self._matrix)
 
-        return Point(result[0, 0], result[0, 1])
+        return Position(result[0, 0], result[0, 1])
 
     def combine(self, transform):
         self._matrix = numpy.matmul(self._matrix, transform._matrix)

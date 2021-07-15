@@ -3,7 +3,7 @@ from abc import ABC
 from igs.graphics.traits import Clonable, Drawable
 
 
-class Point(Clonable):
+class Position(Clonable):
     def __init__(self, x, y):
         self._x = x
         self._y = y
@@ -51,6 +51,17 @@ class Line(Shape):
         painter.drawLine(p0.x(), p0.y(), p1.x(), p1.y())
 
 
+class Point(Shape):
+    def __init__(self, p):
+        super().__init__()
+
+        self.add(p)
+
+    def draw(self, painter):
+        p = self.point_at(0)
+        painter.drawLine(p.x(), p.y(), p.x(), p.y())
+
+
 class Rectangle(Shape):
     def __init__(self, top_left, width, height):
         if width <= 0:
@@ -60,7 +71,7 @@ class Rectangle(Shape):
 
         super().__init__()
 
-        bottom_right = Point(top_left.x() + width, top_left.y() + height)
+        bottom_right = Position(top_left.x() + width, top_left.y() + height)
 
         self.add(top_left)
         self.add(bottom_right)
