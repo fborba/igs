@@ -22,7 +22,16 @@ class MainWindow(QtWidgets.QWidget):
         shape_list.setModel(self._display_file)
 
         self._shape_selector = QtWidgets.QComboBox()
-        self._shape_selector.addItems(["Line", "Point", "Rectangle", "Square"])
+        self._shape_selector.addItems(
+            [
+                "Closed Polyline",
+                "Line",
+                "Point",
+                "Polyline",
+                "Rectangle",
+                "Square",
+            ]
+        )
 
         shape_create_button = QtWidgets.QPushButton("Create")
         shape_create_button.clicked.connect(self.add_shape)

@@ -1,6 +1,14 @@
 from PyQt5 import QtWidgets
 
-from igs.graphics.shape import Line, Point, Position, Rectangle, Square
+from igs.graphics.shape import (
+    ClosedPolyline,
+    Line,
+    Point,
+    Polyline,
+    Position,
+    Rectangle,
+    Square,
+)
 
 from igs.ui import util
 
@@ -87,6 +95,29 @@ class PointDialog(ShapeDialog):
         return Point(Position(x, y))
 
 
+class PolylineDialog(ShapeDialog):
+    def __init__(self, shape):
+        super().__init__(shape)
+
+        self._coordinates = QtWidgets.QLineEdit()
+
+        self.add_input("(x, y) coordinates", self._coordinates)
+
+    def shape(self):
+        coordinates = eval(self._coordinates.text())
+        points = [Position(x, y) for (x, y) in coordinates]
+
+        return Polyline(points)
+
+
+class ClosedPolylineDialog(PolylineDialog):
+    def shape(self):
+        coordinates = eval(self._coordinates.text())
+        points = [Position(x, y) for (x, y) in coordinates]
+
+        return ClosedPolyline(points)
+
+
 class RectangleDialog(ShapeDialog):
     def __init__(self, shape):
         super().__init__(shape)
@@ -150,5 +181,7 @@ dialog_factory = DialogFactory()
 
 dialog_factory.register("Line", LineDialog)
 dialog_factory.register("Point", PointDialog)
+dialog_factory.register("Closed Polyline", ClosedPolylineDialog)
+dialog_factory.register("Polyline", PolylineDialog)
 dialog_factory.register("Rectangle", RectangleDialog)
 dialog_factory.register("Square", SquareDialog)

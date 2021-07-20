@@ -37,6 +37,9 @@ class Shape(ABC, Clonable, Drawable):
     def point_at(self, index):
         return self._points[index]
 
+    def num_of_points(self):
+        return len(self._points)
+
 
 class Line(Shape):
     def __init__(self, p0, p1):
@@ -47,6 +50,34 @@ class Line(Shape):
     def draw(self, painter):
         p0 = self.point_at(0)
         p1 = self.point_at(1)
+
+        painter.drawLine(p0.x(), p0.y(), p1.x(), p1.y())
+
+
+class Polyline(Shape):
+    def __init__(self, points):
+        super().__init__()
+
+        for p in points:
+            self.add(p)
+
+    def draw(self, painter):
+        for i in range(1, self.num_of_points()):
+            p0 = self.point_at(i - 1)
+            p1 = self.point_at(i)
+
+            painter.drawLine(p0.x(), p0.y(), p1.x(), p1.y())
+
+
+class ClosedPolyline(Polyline):
+    def __init__(self, points):
+        super().__init__(points)
+
+    def draw(self, painter):
+        super().draw(painter)
+
+        p0 = self.point_at(0)
+        p1 = self.point_at(self.num_of_points() - 1)
 
         painter.drawLine(p0.x(), p0.y(), p1.x(), p1.y())
 
