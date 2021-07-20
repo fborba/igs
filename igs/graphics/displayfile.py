@@ -20,8 +20,15 @@ class DisplayFile(QtCore.QAbstractListModel):
         if index.row() >= len(self._shapes):
             return QtCore.QVariant()
 
-        if role == Qt.DisplayRole or role == Qt.EditRole:
-            return str(self._shapes[index.row()])
+        object = self._shapes[index.row()]
+
+        if role == Qt.DisplayRole:
+            hash_value = hex(hash(object))
+            return f"{object} ({hash_value[2:8]})"
+
+        elif role == Qt.EditRole:
+            return f"{self._shapes[index.row()]}"
+
         else:
             return QtCore.QVariant()
 

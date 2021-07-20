@@ -21,8 +21,7 @@ class Shape(ABC, Clonable, Drawable):
         self._name = self.__class__.__name__
 
     def __str__(self):
-        hash_value = str(hex(hash(self)))
-        return f"{self._name} ({hash_value[-6:]})"
+        return self._name
 
     def apply(self, transform):
         self._points = [transform(p) for p in self._points]
