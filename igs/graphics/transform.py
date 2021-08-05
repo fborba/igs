@@ -67,4 +67,4 @@ def combine(*transforms):
     for t in transforms:
         transform.combine(t)
 
-    return t
+    return transform

@@ -83,7 +83,7 @@ class Window(Rectangle):
 
     def normalize(self, point):
         x = (point.x() - self.xmin()) / self.width()
-        y = 1 - (point.y() - self.ymin()) / self.height()
+        y = (point.y() - self.ymin()) / self.height()
 
         return Position(x, y)
 

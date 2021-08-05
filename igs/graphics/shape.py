@@ -101,7 +101,7 @@ class Rectangle(Shape):
 
         super().__init__()
 
-        bottom_right = Position(top_left.x() + width, top_left.y() + height)
+        bottom_right = Position(top_left.x() + width, top_left.y() - height)
 
         self.add(top_left)
         self.add(bottom_right)

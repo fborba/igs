@@ -55,7 +55,7 @@ class Viewport(QtWidgets.QFrame):
         self.setFixedSize(size, size)
 
         self._window = Window(
-            Position(-window_size / 2, -window_size / 2),
+            Position(-window_size / 2, window_size / 2),
             window_size,
             window_size,
         )
