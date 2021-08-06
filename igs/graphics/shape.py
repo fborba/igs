@@ -33,6 +33,12 @@ class Shape(ABC, Clonable, Drawable):
     def set_name(self, name):
         self._name = name
 
+    def center(self):
+        center_x = sum(p.x() for p in self._points) / self.num_of_points()
+        center_y = sum(p.y() for p in self._points) / self.num_of_points()
+
+        return Position(center_x, center_y)
+
     def point_at(self, index):
         return self._points[index]
 
@@ -92,28 +98,18 @@ class Point(Shape):
         painter.drawLine(p.x(), p.y(), p.x(), p.y())
 
 
-class Rectangle(Shape):
+class Rectangle(ClosedPolyline):
     def __init__(self, top_left, width, height):
         if width <= 0:
             raise ValueError("non-positive width")
         if height <= 0:
             raise ValueError("non-positive height")
 
-        super().__init__()
-
+        top_right = Position(top_left.x() + width, top_left.y())
         bottom_right = Position(top_left.x() + width, top_left.y() - height)
+        bottom_left = Position(top_left.x(), top_left.y() - height)
 
-        self.add(top_left)
-        self.add(bottom_right)
-
-    def draw(self, painter):
-        p0 = self.point_at(0)
-        p1 = self.point_at(1)
-
-        painter.drawLine(p0.x(), p0.y(), p1.x(), p0.y())
-        painter.drawLine(p0.x(), p0.y(), p0.x(), p1.y())
-        painter.drawLine(p1.x(), p1.y(), p0.x(), p1.y())
-        painter.drawLine(p1.x(), p1.y(), p1.x(), p0.y())
+        super().__init__([top_left, top_right, bottom_right, bottom_left])
 
 
 class Square(Rectangle):

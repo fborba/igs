@@ -83,7 +83,7 @@ class Window(Rectangle):
 
     def normalize(self, point):
         x = (point.x() - self.xmin()) / self.width()
-        y = (point.y() - self.ymin()) / self.height()
+        y = 1 - (point.y() - self.ymin()) / self.height()
 
         return Position(x, y)
 
@@ -111,13 +111,13 @@ class Window(Rectangle):
         )
 
     def xmin(self):
-        return self._points[0].x()
+        return min(p.x() for p in self._points)
 
     def xmax(self):
-        return self._points[1].x()
+        return max(p.x() for p in self._points)
 
     def ymin(self):
-        return self._points[0].y()
+        return min(p.y() for p in self._points)
 
     def ymax(self):
-        return self._points[1].y()
+        return max(p.y() for p in self._points)
