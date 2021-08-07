@@ -49,8 +49,8 @@ class Scaling(Transform):
 
 class Rotation(Transform):
     def __init__(self, angle):
-        c = math.cos(angle)
-        s = math.sin(angle)
+        c = math.cos(math.radians(-angle))
+        s = math.sin(math.radians(-angle))
 
         self._matrix = numpy.array(
             [

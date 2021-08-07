@@ -11,7 +11,7 @@ class DisplayFile(QtCore.QAbstractListModel):
         position = self.rowCount()
 
         self.insertRows(position, 1)
-        self.setData(self.index(position), shape)
+        self.setData(self.index(position), shape, Qt.UserRole)
 
     def data(self, index, role=Qt.DisplayRole):
         if not index.isValid():
@@ -28,6 +28,9 @@ class DisplayFile(QtCore.QAbstractListModel):
 
         elif role == Qt.EditRole:
             return f"{self._shapes[index.row()]}"
+
+        elif role == Qt.UserRole:
+            return object.clone()
 
         else:
             return QtCore.QVariant()
@@ -70,18 +73,23 @@ class DisplayFile(QtCore.QAbstractListModel):
         return len(self._shapes)
 
     def setData(self, index, value, role=Qt.EditRole):
-        if index.isValid() and role == Qt.EditRole:
-            shape = self._shapes[index.row()]
+        if not index.isValid():
+            return False
 
-            if isinstance(value, str):
-                shape.set_name(value)
-            else:
-                self._shapes[index.row()] = value
-                self.dataChanged.emit(index, index, [role])
+        if role == Qt.EditRole:
+            shape = self._shapes[index.row()]
+            shape.set_name(value)
 
             return True
 
-        return False
+        elif role == Qt.UserRole:
+            self._shapes[index.row()] = value
+            self.dataChanged.emit(index, index, [role])
+
+            return True
+
+        else:
+            return False
 
     def __iter__(self):
         return iter(self._shapes)
